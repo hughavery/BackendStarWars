@@ -2,25 +2,21 @@
 // Include your database connection code
 require '../Database/login.php';
 
-
-
-
-function getFilms() {
+function getPeople() {
     try {
-
-
         // Establish a database connection
         $db = new PDO(CONNECTION_STRING, CONNECTION_USER, CONNECTION_PASSWORD, CONNECTION_OPTIONS);
 
         // Prepare and execute the SQL query
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $stmt = $db->prepare("SELECT * FROM film WHERE filmID = :id");
+        if (isset($_GET['personId'])) {
+            $id = $_GET['personId'];
+            $stmt = $db->prepare("SELECT * FROM people WHERE peopleID = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
         } else {
-            $stmt = $db->query("SELECT * FROM film ORDER BY film_episode_id");
+            $stmt = $db->query("SELECT * FROM people");
         }
+
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Close the database connection
@@ -40,7 +36,7 @@ function getFilms() {
 // Define the HTTP request method and route
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
-    getFilms();
+    getPeople();
 } else {
     // Handle other HTTP methods if needed
     header("HTTP/1.1 405 Method Not Allowed");
