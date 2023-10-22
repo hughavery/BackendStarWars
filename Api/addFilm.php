@@ -48,7 +48,10 @@ function addFilm($film_title, $film_episode_id, $film_opening_crawl, $film_direc
         $stmt1->bindParam(':film_director', $film_director);
         $stmt1->bindParam(':film_release_date', $film_release_date);
         $stmt1->bindParam(':image_url', $image_url);
+
+
         $stmt1->execute();
+
 
         header('Content-Type: application/json');
         echo json_encode(array("message" => "everything is ok"));
